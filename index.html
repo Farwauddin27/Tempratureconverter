@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <link rel="icon" href="./java/icons8-temperature-100.png">
+    <style>       
+        /* Basic styling and background */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.7s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Neon Glow Container */
+        .container {
+            background: #000;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 50px rgba(0, 255, 255, 0.4);
+            text-align: center;
+            width: 400px;
+            animation: neon-flicker 1.5s infinite;
+        }
+
+        /* Heading */
+        h1 {
+            color: #00ffcb;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        /* Label Styling */
+        label {
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        /* Input Styling */
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: 2px solid #00ffcb;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            transition: box-shadow 0.4s, border-color 0.4s;
+        }
+
+        input[type="number"]:focus {
+            box-shadow: 0 0 20px #00ffcb;
+            border-color: #00ffcb;
+        }
+
+        /* Button Styling */
+        button {
+            background: none;
+            border: 2px solid #00ffcb;
+            color: #00ffcb;
+            font-size: 18px;
+            padding: 10px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.4s, box-shadow 0.4s;
+            box-shadow: 0 0 10px #00ffcb;
+        }
+
+        button:hover {
+            background-color: #00ffcb;
+            color: #000;
+            box-shadow: 0 0 20px #00ffcb, 0 0 40px #00ffcb;
+        }
+
+        /* Temperature Result Styling */
+        p {
+            color: #00ffcb;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        /* Snowflake Effect */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: fall 10s infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px); opacity: 0; }
+            100% { transform: translateY(100vh); opacity: 1; }
+        }
+
+        /* Fireflake Effect */
+        .fireflake {
+            position: absolute;
+            bottom: 50px; /* Adjusted to ensure visibility */
+            width: 10px; /* Increased width */
+            height: 20px; /* Increased height */
+            background-color: #ff4000;
+            border-radius: 50%;
+            opacity: 1;
+            animation: rise 8s infinite;
+            z-index: 1;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(100vh); opacity: 0; }
+            100% { transform: translateY(-20px); opacity: 1; }
+        }
+
+        /* Flicker Effect */
+        @keyframes neon-flicker {
+            0% {
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 50px rgba(0, 255, 255, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3);
+            }
+        }
+
+        /* Background Colors for Hot/Cold */
+        .hot {
+            background-color: #cb3813 !important; /* Reddish background for hot weather */
+        }
+
+        .cold {
+            background-color: #0044ff !important; /* Cool blue for cold weather */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Temperature Converter</h1>
+        <form onsubmit="convertToFahrenheit(); return false;">
+            <label for="cel">Enter Celsius Value:</label>
+            <input type="number" id="cel" name="cel" required>
+            <button type="submit">Convert</button>
+        </form>
+        <p id="Fahrenheit"></p>
+        <p id="kelvin"></p>
+    </div>
+
+    <script>
+        // Function to add snowflakes
+        function addSnowflakes() {
+            for (let i = 0; i < 50; i++) {
+                let snowflake = document.createElement("div");
+                snowflake.classList.add("snowflake");
+                snowflake.style.left = Math.random() * window.innerWidth + "px";
+                snowflake.style.animationDuration = Math.random() * 5 + 5 + "s";
+                document.body.appendChild(snowflake);
+            }
+        }
+
+        // Function to add fireflakes
+        function addFireflakes() {
+            for (let i = 0; i < 50; i++) {
+                let fireflake = document.createElement("div");
+                fireflake.classList.add("fireflake");
+                fireflake.style.left = Math.random() * window.innerWidth + "px";
+                fireflake.style.animationDuration = Math.random() * 3 + 3 + "s"; // Duration between 3s and 6s
+                document.body.appendChild(fireflake);
+            }
+        }
+
+        function convertToFahrenheit() {
+            var celsius = document.getElementById("cel").value;
+            var fahrenheit = celsius * 9 / 5 + 32;
+            var Kelvin = parseFloat(celsius) + 273.15;
+            document.getElementById("Fahrenheit").innerText = "Temperature in Fahrenheit: " + fahrenheit.toFixed(2);
+            document.getElementById("kelvin").innerText = "Temperature in Kelvin: " + Kelvin.toFixed(2);
+            
+            // Clear previous fire or snowflake elements
+            document.querySelectorAll('.snowflake').forEach(e => e.remove());
+            document.querySelectorAll('.fireflake').forEach(e => e.remove());
+
+            // Determine background and animation based on temperature
+            if (celsius > 30) {
+                document.body.classList.remove('cold');
+                document.body.classList.add('hot'); // Hot weather: turn reddish
+                addFireflakes(); // Add fireflakes for hot weather
+            } else if (celsius < 0) {
+                document.body.classList.remove('hot');
+                document.body.classList.add('cold'); // Cold weather: turn blue
+                addSnowflakes(); // Add snowflakes for cold weather
+            } else {
+                document.body.classList.remove('hot', 'cold'); // Neutral temperature
+            }
+        }
+    </script>
+</body>
+</html>
